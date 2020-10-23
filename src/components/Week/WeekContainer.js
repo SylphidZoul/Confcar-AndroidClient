@@ -1,27 +1,28 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
+import { userContext } from '../../Context'
 import Http from '../../libs/http'
 import Storage from '../../libs/storage'
 import WeekScreen from './WeekScreen'
 
-const employee_id = 1
-
-const WeekContainer = ({ navigation }) => {
-  const [ details, setDetails ] = useState({})
-  const [ connectionError, setConnectionError ] = useState(false)
+const WeekContainer = ({navigation}) => {
+  const [details, setDetails] = useState({})
+  const [connectionError, setConnectionError] = useState(false)
+  const [loading, setLoading] = useState(true)
+  const { employeeId } = useContext(userContext)
 
   useEffect(() => {
     getWeekDetails()
   }, [])
 
   useEffect(() => {
-    if(details.fullname) {
+    if (details.fullname) {
       console.log('se guarda el state', details)
       Storage.instance.store('WeekDetail', details)
     }
   }, [details])
 
   useEffect(() => {
-    if (connectionError){
+    if (connectionError) {
       setTimeout(() => {
         setConnectionError(false)
       }, 5000)
@@ -29,22 +30,24 @@ const WeekContainer = ({ navigation }) => {
   }, [connectionError])
 
   const getWeekDetails = () => {
-    Http.instance.get(`days/employee_id=${employee_id}&week=42`)
-      .then(data => {
-        console.log('se obtuvo desde la api', data)
+    Http.instance
+      .get(`days/employee_id=${employeeId}`)
+      .then((data) => {
         setDetails(data.body)
+        setLoading(false)
       })
-      .catch(e => getFromStorage())
+      .catch((e) => getFromStorage())
   }
 
   const getFromStorage = () => {
     setConnectionError(true)
-    Storage.instance.get('WeekDetail')
-      .then(data => {
-        console.log('se obtuvo desde el storage', data)
+    Storage.instance
+      .get('WeekDetail')
+      .then((data) => {
         setDetails(data)
+        setLoading(false)
       })
-      .catch(e => console.log('No se pudo acceder a la red ni al storage.'))
+      .catch((e) => console.log('No se pudo acceder a la red ni al storage.'))
   }
 
   const handlePress = () => {
@@ -56,6 +59,7 @@ const WeekContainer = ({ navigation }) => {
       details={details}
       onPress={handlePress}
       error={connectionError}
+      isLoading={loading}
     />
   )
 }
