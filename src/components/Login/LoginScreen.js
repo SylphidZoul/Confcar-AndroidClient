@@ -1,13 +1,31 @@
 import React from 'react'
-import { View, Text, TextInput, Pressable, StyleSheet, Image } from 'react-native'
+import {
+  View, Text,
+  TextInput,
+  Pressable,
+  ActivityIndicator,
+  StyleSheet, Image,
+  Keyboard,
+  TouchableWithoutFeedback
+} from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import ConnectionError from '../ConnectionError'
 import Colors from '../../assets/Colors'
 import Profile from '../../assets/profile.png'
 import Logo from '../../assets/logo.png'
 
-const LoginScreen = ({ dniValue, passwordValue, onDniChange, onPasswordChange, onSubmit, error, connectionError }) => {
+const LoginScreen = ({
+  dniValue,
+  passwordValue,
+  onDniChange,
+  onPasswordChange,
+  onSubmit,
+  isFetching,
+  error,
+  connectionError
+}) => {
   return (
+    <TouchableWithoutFeedback touchSoundDisabled onPress={Keyboard.dismiss}>
     <LinearGradient
       colors={[Colors.green, Colors.purple]}
       locations={[0, 1]}
@@ -24,18 +42,18 @@ const LoginScreen = ({ dniValue, passwordValue, onDniChange, onPasswordChange, o
           DNI
         </Text>
         <TextInput
-          value={dniValue}
+          defaultValue={dniValue}
           keyboardType='numeric'
-          onChange={onDniChange}
+          onChangeText={(text) => onDniChange(text)}
           style={styles.inputs}
         />
         <Text style={styles.labels}>
           Contraseña
         </Text>
         <TextInput
-          value={passwordValue}
+          defaultValue={passwordValue}
           textContentType='password'
-          onChange={onPasswordChange}
+          onChangeText={(text) => onPasswordChange(text)}
           secureTextEntry
           style={styles.inputs}
         />
@@ -47,10 +65,14 @@ const LoginScreen = ({ dniValue, passwordValue, onDniChange, onPasswordChange, o
         <Pressable
           style={styles.btn}
           onPress={onSubmit}
+          touchSoundDisabled={false}
         >
-          <Text style={styles.btnText}>
-            Entrar
-          </Text>
+          { isFetching
+            ? <ActivityIndicator color={Colors.green} />
+            : <Text style={styles.btnText}>
+                Entrar
+              </Text>
+          }
         </Pressable>
       </View>
         <Image
@@ -61,6 +83,7 @@ const LoginScreen = ({ dniValue, passwordValue, onDniChange, onPasswordChange, o
           <ConnectionError />
         }
     </LinearGradient>
+    </TouchableWithoutFeedback>
   )
 }
 

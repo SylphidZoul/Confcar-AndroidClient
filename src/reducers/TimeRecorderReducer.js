@@ -25,7 +25,8 @@ const TimeRecorderReducer = (state, action) => {
     case SERVER_ERROR:
       return {
         ...state,
-        interval: action.payload
+        interval: action.payload,
+        showMarkButton: false
       }
     default:
       return state

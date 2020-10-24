@@ -55,7 +55,7 @@ export const markTime = (data) => {
 }
 
 export const initFromStorage = (storedData) => {
-  if(!storedData) return 
+  if(!storedData) return { type: 'NONE' }
 
   const today = new Date()
   const day = new Date(storedData.day)

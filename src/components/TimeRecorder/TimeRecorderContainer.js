@@ -47,12 +47,12 @@ const TimeRecorderContainer = () => {
       .then(lastState => {
         dispatch(initFromStorage(lastState))
       })
-      .catch(err => console.log('no hay state'))
+      .catch(err => console.log('error en storage'))
   }, [])
 
   useEffect(() => {
     state.hour && Storage.instance.store('timeState', state)
-  }, [state]);
+  }, [state])
 
   useEffect(() => {
     if (connectionError){
