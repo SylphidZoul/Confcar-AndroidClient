@@ -26,12 +26,12 @@ const barOptions = {
 }
 
 const Navigations = () => {
-  const {loading, employeeId} = useContext(userContext);
+  const { isLoading, employeeId } = useContext(userContext);
 
   return (
     <NavigationContainer>
       <StatusBar backgroundColor={Colors.green} />
-      { loading
+      { isLoading
         ?
           <SplashScreen />
         :

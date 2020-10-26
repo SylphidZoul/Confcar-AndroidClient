@@ -5,8 +5,6 @@ import {
   Pressable,
   ActivityIndicator,
   StyleSheet, Image,
-  Keyboard,
-  TouchableWithoutFeedback
 } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
 import ConnectionError from '../ConnectionError'
@@ -25,7 +23,6 @@ const LoginScreen = ({
   connectionError
 }) => {
   return (
-    <TouchableWithoutFeedback touchSoundDisabled onPress={Keyboard.dismiss}>
     <LinearGradient
       colors={[Colors.green, Colors.purple]}
       locations={[0, 1]}
@@ -65,7 +62,6 @@ const LoginScreen = ({
         <Pressable
           style={styles.btn}
           onPress={onSubmit}
-          touchSoundDisabled={false}
         >
           { isFetching
             ? <ActivityIndicator color={Colors.green} />
@@ -83,7 +79,6 @@ const LoginScreen = ({
           <ConnectionError />
         }
     </LinearGradient>
-    </TouchableWithoutFeedback>
   )
 }
 
@@ -100,6 +95,7 @@ const styles = StyleSheet.create({
     padding: 40,
     borderRadius: 8,
     backgroundColor: Colors.grey,
+    zIndex: 10
   },
   imageContainer: {
     position: 'absolute',
@@ -143,7 +139,7 @@ const styles = StyleSheet.create({
     borderRadius: 500,
     borderWidth: 2,
     backgroundColor: Colors.white,
-    borderColor: Colors.green
+    borderColor: Colors.green,
   },
   btnText: {
     color: Colors.green,
@@ -156,7 +152,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     width: 450,
-    height: 234
+    height: 234,
+    zIndex: 0
   }
 });
 

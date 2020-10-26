@@ -5,22 +5,12 @@ import LoginScreen from './LoginScreen'
 const LoginContainer = () => {
   const [ dni, setDni ] = useState('')
   const [ password, setPassword ] = useState('')
-  const [ fetching, setFetching ] = useState(false)
-  const [ connectionError, setConnectionError ] = useState(false)
-  const { incorrectData, Login } = useContext(userContext)
+  const { incorrectData, isFetching, connectionError, Login } = useContext(userContext)
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (!dni || !password) return
-    setFetching(true)
     const data = { dni, password }
-    const successful = await Login(data)
-    if (incorrectData || !successful) {
-      setFetching(false)
-    }
-    if (!successful) {
-      console.log('entro al not successful')
-      setConnectionError(true)
-    }
+    Login(data)
   }
 
   const handleDni = (text) => {
@@ -31,14 +21,6 @@ const LoginContainer = () => {
     setPassword(text)
   }
 
-  useEffect(() => {
-    if(connectionError) {
-      setTimeout(() => {
-        setConnectionError(false)
-      }, 5000)
-    }
-  }, [connectionError])
-
   return (
     <LoginScreen
       dniValue={dni}
@@ -46,7 +28,7 @@ const LoginContainer = () => {
       onDniChange={handleDni}
       onPasswordChange={handlePassword}
       onSubmit={handleSubmit}
-      isFetching={fetching}
+      isFetching={isFetching}
       connectionError={connectionError}
       error={incorrectData}
     />

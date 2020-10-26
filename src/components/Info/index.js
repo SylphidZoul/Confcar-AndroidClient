@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     marginBottom: 4,
+    justifyContent: 'center'
   },
   title: {
     marginRight: 4,

@@ -1,56 +1,66 @@
-import React, { useState, useEffect, createContext } from 'react'
+import React, { useEffect, createContext, useReducer } from 'react'
 import Http from '../libs/http'
 import Storage from '../libs/storage'
+import EmployeeReducer, { initialState } from '../reducers/EmployeeReducer'
 
 export const userContext = createContext()
 const { Provider } = userContext
 
 const UserContextProvider = ({ children }) => {
-  const [ employeeId, setEmployeeId ] = useState('')
-  const [ incorrectData, setIncorrectData ] = useState(false)
-  const [ loading, setLoading ] = useState(true)
+  const [ state, dispatch ] = useReducer(EmployeeReducer, initialState)
+  const { employeeId, incorrectData, isFetching, isLoading, connectionError } = state
 
   const Login = async (data) => {
-    setIncorrectData(false)
+    dispatch({ type: 'TRY_LOGIN' })
     try {
       const res = await Http.instance.post(data, 'employees')
       if (res.error) {
-        setIncorrectData(true)
-        return true
+        dispatch({ type: 'FAILED_LOGIN'} )
+        return
       }
       const employeeId = res.body.employee_id
-      setEmployeeId(employeeId)
+
       const stored = await Storage.instance.store('employeeId', employeeId)
       console.log('Se guardo el id', stored)
-      return true
+      dispatch({ type: 'SUCCESS_LOGIN', payload: employeeId })
       
     } catch (err) {
-      return false
+      dispatch({ type: 'FAILED_CONNECTION' })
     }
   }
 
   const getIdFromStorage = async () => {
-    setLoading(true)
     try {
       const stored = await Storage.instance.get('employeeId')
-      if (stored) {
-        setEmployeeId(stored)
-      } 
-      setLoading(false)
+      dispatch({ type: 'SUCCESS_LOGIN', payload: stored })
     } catch (error) {
-      setLoading(false)
+      dispatch({ type: 'FAILED_STORAGE'})
       console.log('Error al recuperar el id del storage')
     }
   }
 
   useEffect(() => {
+    console.log(state)
+  })
+
+  useEffect(() => {
     getIdFromStorage()
   }, [])
 
+  useEffect(() => {
+    if(connectionError) {
+      setTimeout(() => {
+        dispatch({ type: 'RESET_ERROR' })
+      }, 5000)
+    }
+  }, [connectionError])
+
   const value = {
     employeeId,
-    loading,
     incorrectData,
+    isFetching,
+    isLoading,
+    connectionError,
     Login
   }
 
