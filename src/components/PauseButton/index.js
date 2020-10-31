@@ -1,8 +1,8 @@
 import React from 'react'
-import { Text, Pressable, StyleSheet } from 'react-native'
+import { Text, Pressable, StyleSheet, ActivityIndicator } from 'react-native'
 import Colors from '../../assets/Colors'
 
-const PauseButton = ({ onPress, isWorking, show }) => {
+const PauseButton = ({ onPress, isWorking, show, isFetching }) => {
   return (
     <Pressable
       onPress={onPress}
@@ -13,9 +13,17 @@ const PauseButton = ({ onPress, isWorking, show }) => {
         : styles.btnGreen,
         show && styles.btnShow
     ]}>
-      <Text style={[styles.btnText, isWorking && styles.redText]}>
-        {isWorking ? 'Pausa Adicional' : 'Terminar pausa'}
-      </Text>
+      {
+        isFetching
+        ? (
+          <ActivityIndicator color={Colors.green} />
+        )
+        : (
+          <Text style={[styles.btnText, isWorking && styles.redText]}>
+            {isWorking ? 'Pausa Adicional' : 'Terminar pausa'}
+          </Text>
+        ) 
+      }
     </Pressable>
   )
 }

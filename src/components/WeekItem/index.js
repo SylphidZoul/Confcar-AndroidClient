@@ -1,16 +1,25 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native'
 import Colors from '../../assets/Colors'
 
-const WeekItem = ({ title, data }) => {
+const WeekItem = ({ title, data, isLoading}) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>
-        {title}
-      </Text>
-      <Text style={styles.data}>
-        {data}
-      </Text>
+      { isLoading
+        ? (
+          <ActivityIndicator color={Colors.green} size={50} />
+          )
+        : (
+          <>
+            <Text style={styles.title}>
+              {title}
+            </Text>
+            <Text style={styles.data}>
+              {data}
+            </Text>
+          </>
+          )
+      }
     </View>
   )
 }

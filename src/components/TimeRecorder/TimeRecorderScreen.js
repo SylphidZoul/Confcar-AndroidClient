@@ -1,14 +1,17 @@
 import React from 'react'
 import { StyleSheet, View, ActivityIndicator } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
-import ConnectionError from '../ConnectionError'
 import PauseButton from '../PauseButton'
 import MarkButton from '../MarkButton'
 import Info from '../Info'
 import Colors from '../../assets/Colors'
 
-const TimeRecorderScreen = ({ state, error, handleMarkButton, handlePauseButton }) => {
-  const { btnText, hour, isWorking, showPauseButton, showMarkButton, pauseAvailable, interval } = state
+const TimeRecorderScreen = ({ state, handleMarkButton, handlePauseButton }) => {
+  const {
+    btnText, hour, isWorking, showPauseButton, showMarkButton,
+    pauseAvailable, interval, isFetching
+  } = state
+    
   return (
     <LinearGradient
       colors={[Colors.green, Colors.purple]}
@@ -18,9 +21,6 @@ const TimeRecorderScreen = ({ state, error, handleMarkButton, handlePauseButton 
       <View
         style={styles.container}
         >
-        <ConnectionError
-          visible={error}
-          />
         <Info
           isWorking={isWorking}
           hour={hour}
@@ -32,11 +32,13 @@ const TimeRecorderScreen = ({ state, error, handleMarkButton, handlePauseButton 
             isWorking={isWorking}
             text={btnText}
             show={showMarkButton}
+            isFetching={isFetching}
             />
           <PauseButton
             onPress={handlePauseButton}
             isWorking={isWorking}
             show={(pauseAvailable && showPauseButton)}
+            isFetching={isFetching}
             /> 
         </View>
       </View>

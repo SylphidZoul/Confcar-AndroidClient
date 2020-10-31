@@ -7,7 +7,6 @@ import {
   StyleSheet, Image,
 } from 'react-native'
 import LinearGradient from 'react-native-linear-gradient'
-import ConnectionError from '../ConnectionError'
 import Colors from '../../assets/Colors'
 import Profile from '../../assets/profile.png'
 import Logo from '../../assets/logo.png'
@@ -19,8 +18,7 @@ const LoginScreen = ({
   onPasswordChange,
   onSubmit,
   isFetching,
-  error,
-  connectionError
+  error
 }) => {
   return (
     <LinearGradient
@@ -75,9 +73,6 @@ const LoginScreen = ({
           source={Logo}
           style={styles.logo}
         />
-        { connectionError &&
-          <ConnectionError />
-        }
     </LinearGradient>
   )
 }

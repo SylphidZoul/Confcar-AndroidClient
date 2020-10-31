@@ -1,8 +1,8 @@
 import React from 'react'
-import { Pressable, Text, StyleSheet } from 'react-native'
+import { Pressable, Text, StyleSheet, ActivityIndicator } from 'react-native'
 import Colors from '../../assets/Colors'
 
-const MarkButton = ({ onPress, text, isWorking, show }) => {
+const MarkButton = ({ onPress, text, isWorking, show, isFetching }) => {
   return (
     <Pressable
       onPress={onPress}
@@ -11,9 +11,17 @@ const MarkButton = ({ onPress, text, isWorking, show }) => {
         isWorking ? styles.btnRed : styles.btnGreen,
         show && styles.btnShow
       ]}>
-      <Text style={[styles.btnText, isWorking && styles.redText]}>
-        {text}
-      </Text>
+      {
+        isFetching
+        ? (
+          <ActivityIndicator color={Colors.green} />
+        )
+        : (
+          <Text style={[styles.btnText, isWorking && styles.redText]}>
+            {text}
+          </Text>
+        ) 
+      }
     </Pressable>
   )
 }

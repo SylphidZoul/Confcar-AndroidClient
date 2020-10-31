@@ -1,13 +1,14 @@
 import React, {useEffect} from 'react'
 import { Text, View, StyleSheet, Modal } from 'react-native'
+import { connect } from 'react-redux'
 import Colors from '../../assets/Colors'
 
-const ConnectionError = (props) => {
+const ConnectionError = ({ visible }) => {
   return (
     <Modal
     animationType="fade"
     transparent
-    {... props}
+    visible={visible}
     >
       <View
         style={styles.container}
@@ -40,4 +41,6 @@ const styles = StyleSheet.create({
   }
 })
 
-export default ConnectionError
+const mapStateToProps = (state) => ({ visible: state.general.connectionError })
+
+export default connect(mapStateToProps)(ConnectionError)

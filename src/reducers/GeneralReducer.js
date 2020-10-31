@@ -1,45 +1,58 @@
+import {
+  TRY_LOGIN,
+  FAILED_LOGIN,
+  SUCCESS_LOGIN,
+  FAILED_CONNECTION,
+  CLEAR_ERROR,
+  TRY_FETCH,
+  SUCCESS_FETCH
+} from '../actions/GeneralActions'
+
 export const initialState = {
   employeeId: null,
   incorrectData: false,
   isFetching: false,
-  isLoading: true,
   connectionError: false
 }
 
-const EmployeeReducer = (state, action) => {
+const generalReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'TRY_LOGIN':
+    case TRY_LOGIN:
       return {
         ...state,
         isFetching: true,
         incorrectData: false
       }
-    case 'FAILED_LOGIN': 
+    case FAILED_LOGIN: 
       return {
         ...state,
         isFetching: false,
         incorrectData: true
       }
-    case 'SUCCESS_LOGIN':
+    case SUCCESS_LOGIN:
       return {
         ...state,
         isFetching: false,
         incorrectData: false,
         employeeId: action.payload || null,
-        isLoading: false
       }
-    case 'FAILED_CONNECTION':
+    case TRY_FETCH:
+      return {
+        ...state,
+        isFetching: true
+      }
+    case SUCCESS_FETCH:
+      return {
+        ...state,
+        isFetching: false
+      }
+    case FAILED_CONNECTION:
       return {
         ...state,
         connectionError: true,
         isFetching: false
       }
-    case 'FAILED_STORAGE':
-      return {
-        ...state,
-        isLoading: false
-      }
-    case 'RESET_ERROR':
+    case CLEAR_ERROR:
       return {
         ...state,
         connectionError: false
@@ -49,4 +62,4 @@ const EmployeeReducer = (state, action) => {
   }
 }
 
-export default EmployeeReducer
+export default generalReducer

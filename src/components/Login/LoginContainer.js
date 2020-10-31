@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { userContext } from '../../Context'
+import React, { useState } from 'react'
+import { connect } from 'react-redux'
+import { login } from '../../actions/GeneralActions'
 import LoginScreen from './LoginScreen'
 
-const LoginContainer = () => {
+const LoginContainer = ({ incorrectData, isFetching, employeeId, login }) => {
   const [ dni, setDni ] = useState('')
   const [ password, setPassword ] = useState('')
-  const { incorrectData, isFetching, connectionError, Login } = useContext(userContext)
 
   const handleSubmit = () => {
     if (!dni || !password) return
     const data = { dni, password }
-    Login(data)
+    login(data)
   }
 
   const handleDni = (text) => {
@@ -20,7 +20,7 @@ const LoginContainer = () => {
   const handlePassword = (text) => {
     setPassword(text)
   }
-
+  
   return (
     <LoginScreen
       dniValue={dni}
@@ -29,10 +29,14 @@ const LoginContainer = () => {
       onPasswordChange={handlePassword}
       onSubmit={handleSubmit}
       isFetching={isFetching}
-      connectionError={connectionError}
       error={incorrectData}
     />
   )
 }
 
-export default LoginContainer
+const mapStateToProps = (state) => state.general
+const mapDispatchToProps = (dispatch) => ({
+  login: (data) => dispatch(login(data))
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginContainer)
