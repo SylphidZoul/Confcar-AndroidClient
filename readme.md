@@ -9,8 +9,8 @@ Confcar is a small business of bed sheets.
 ![Splash](./readmeImgs/screen0.png)
 ![Login](./readmeImgs/screen4.png)
 ![Marker](./readmeImgs/screen1.png)
-![Summary](./readmeImgs/screen3.png)
-![Details](./readmeImgs/screen4.png)
+![Summary](./readmeImgs/screen2.png)
+![Details](./readmeImgs/screen3.png)
 
 _iOS version not tested._
 
