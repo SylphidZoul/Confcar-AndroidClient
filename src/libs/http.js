@@ -1,6 +1,6 @@
 class Http {
   static instance = new Http()
-  server = 'http://192.168.100.10:3004/'
+  server = 'http://localhost:3004/'
 
   get = async (param) => {
     try {

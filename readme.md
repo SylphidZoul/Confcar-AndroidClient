@@ -24,3 +24,6 @@ _iOS version not tested._
 * [react-redux](https://react-redux.js.org/)
 * [redux-thunk](https://www.npmjs.com/package/redux-thunk)
 * [redux-persist](https://www.npmjs.com/package/redux-persist)
+* [jest](https://jestjs.io/)
+* [redux-mock-store](https://github.com/reduxjs/redux-mock-store)
+* [fetch-mock](https://www.npmjs.com/package/fetch-mock)
