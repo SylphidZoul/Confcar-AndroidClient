@@ -1,4 +1,5 @@
 import TimeRecorderReducer, {initialState} from '../../reducers/TimeRecorderReducer'
+import { intervalMock } from '../../__mocks__/TimeRecorder'
 
 describe('TimeRecorder reducer tests', () => {
   test('Should return same state', () => {
@@ -6,15 +7,8 @@ describe('TimeRecorder reducer tests', () => {
   })
   
   test('Should return state after marking a schedule', () => {
-    const payload = {
-      interval: 'Almuerzo finalizado:',
-      hour:  '14 hs.',
-      btnText: 'Salida',
-      isWorking: true,
-      showPauseButton: true
-    }
-    const action = { type: 'MARK_TIME', payload}
-    expect(TimeRecorderReducer(initialState, action)).toStrictEqual({...initialState, ...payload})
+    const action = { type: 'MARK_TIME', payload: intervalMock }
+    expect(TimeRecorderReducer(initialState, action)).toStrictEqual({...initialState, ...intervalMock})
   })
 
   test('Should return the error from the server', () => {

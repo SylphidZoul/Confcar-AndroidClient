@@ -1,4 +1,5 @@
 import WeekReducer, {initialState} from '../../reducers/WeekReducer'
+import { detailedWeekMock } from '../../__mocks__/Week'
 
 describe('Week reducer tests', () => {
   test('Should return same state', () => {
@@ -6,13 +7,7 @@ describe('Week reducer tests', () => {
   })
 
   test('Should return fetched data', () => {
-    const payload = {
-      detailedDays: [],
-      fullname: 'Agustin',
-      weekHours: '45',
-      weekPay: 9000
-    }
-    const action = { type: 'FETCH_DETAILS', payload }
-    expect(WeekReducer(initialState, action)).toStrictEqual(payload)
+    const action = { type: 'FETCH_DETAILS', payload: detailedWeekMock }
+    expect(WeekReducer(initialState, action)).toStrictEqual(detailedWeekMock)
   })
 })

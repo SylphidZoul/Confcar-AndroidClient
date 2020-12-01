@@ -1,13 +1,12 @@
 import { login, showConnectionError } from '../../actions/GeneralActions'
 import { initialState } from '../../reducers/GeneralReducer'
-import '../../libs/http'
 import fetchMock from 'fetch-mock'
 import thunk from 'redux-thunk'
 import configureMockStore from 'redux-mock-store'
 
 const mockStore = configureMockStore([thunk])
 
-describe('General action creators Tests', () => {
+describe('General actions creators Tests', () => {
   beforeEach(() => {
     fetchMock.restore()
   })

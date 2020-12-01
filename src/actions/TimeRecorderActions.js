@@ -116,7 +116,6 @@ export const checkDate = () => (dispatch, getState) => {
   const storedDate = new Date(storedDay)
   
   if(today.getDay() === storedDate.getDay() && today.getMonth() === storedDate.getMonth()){
-    console.log('entro acá')
     return
   }
   
